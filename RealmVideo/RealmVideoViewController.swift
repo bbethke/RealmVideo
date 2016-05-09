@@ -84,6 +84,12 @@ class RealmVideoViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
+    @IBAction func dismissVideoControllerWithGesture(sender: UIPinchGestureRecognizer) {
+        if sender.state == .Ended && sender.scale < 0.8 {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
     /// Called when the AVPlayer is started in the UIWebView
     func playerDidStart() {
         let window = UIApplication.sharedApplication().windows.last!

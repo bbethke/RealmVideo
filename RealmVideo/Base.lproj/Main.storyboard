@@ -23,12 +23,16 @@
                             </webView>
                         </subviews>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Mk2-c4-gdP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="4QM-an-gkA"/>
                             <constraint firstAttribute="trailing" secondItem="Mk2-c4-gdP" secondAttribute="trailing" id="9Oi-Ya-NhO"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Mk2-c4-gdP" secondAttribute="bottom" id="eNf-C6-y1y"/>
                             <constraint firstItem="Mk2-c4-gdP" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="qo5-3f-xDO"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="9Bg-pj-s1s" appends="YES" id="P7A-Hd-Iye"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="floatingSlides" destination="irH-e9-uTY" id="Ozb-FA-2fM"/>
@@ -65,6 +69,11 @@
                         <constraint firstItem="Jur-nk-V80" firstAttribute="top" secondItem="irH-e9-uTY" secondAttribute="top" id="ygS-k3-xC9"/>
                     </constraints>
                 </view>
+                <pinchGestureRecognizer id="9Bg-pj-s1s">
+                    <connections>
+                        <action selector="dismissVideoControllerWithGesture:" destination="BYZ-38-t0r" id="V0Z-yx-aPr"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="286" y="434"/>
         </scene>
@@ -105,18 +114,18 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NR5-Au-YZ4" id="Sad-Fr-5Ai">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Uzd-qA-RaS">
-                                                    <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                                    <rect key="frame" x="15" y="5" width="32" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yxC-0K-XMy">
-                                                    <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
+                                                    <rect key="frame" x="15" y="25" width="41" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
