@@ -177,20 +177,18 @@ class RealmVideoViewController: UIViewController, UIWebViewDelegate {
     
     // Get position of the video and slides from the UIWebView
     func webViewDidFinishLoad(webView: UIWebView) {
-        if positionOfSlides == nil {
-            let position = positionOfElementWithId("slideshow-player") + 91.0
-            if position > 91.0 {
-                positionOfSlides = position
-            }
+        if positionOfSlides == nil && !webView.loading {
+            let position = positionOfElementWithId("slideshow-player")
+            positionOfSlides = position
         }
         
-        if positionOfVideo == nil {
-            let position = positionOfElementWithId("preroll-overlay") + 63
-            if position > 63.0 {
-                positionOfVideo = position
-            } else if position == 63.0 {
-                let youtubePosition = positionOfElementWithId("video-player") + 63
+        if positionOfVideo == nil && !webView.loading {
+            let position = positionOfElementWithId("preroll-overlay")
+            if position == 0.0 {
+                let youtubePosition = positionOfElementWithId("video-player")
                 positionOfVideo = youtubePosition
+            } else {
+                positionOfVideo = position
             }
         }
         
