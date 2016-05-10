@@ -14,6 +14,7 @@ import AVKit
 
 let horizontalMargin: CGFloat = 20.0
 let verticalMargin: CGFloat = 50.0
+let kUserAgent: String = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/601.6.17 (KHTML, like Gecko) Version/9.1.1 Safari/601.6.17"
 
 enum SlidePosition {
     case TopLeft
@@ -52,6 +53,8 @@ class RealmVideoViewController: UIViewController, UIWebViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let url = webURL else { return }
+        
+        NSUserDefaults.standardUserDefaults().registerDefaults(["UserAgent": kUserAgent]);
         
         let request = NSURLRequest(URL: url)
         webView.delegate = self
@@ -191,7 +194,9 @@ class RealmVideoViewController: UIViewController, UIWebViewDelegate {
             }
         }
         
-        if self.videoURL == nil {
+        if self.videoURL == nil &&
+            webView.stringByEvaluatingJavaScriptFromString("document.readyState") == "complete" {
+            
             let regexString = "var metaTags=document.body.innerHTML;var match = metaTags.match(/id=\\\"wistia\\_[0-9]{3,9}\\_source\\\" src=\\\"(.*?)\\\"/i);match[1];"
             
             self.videoURL = webView.stringByEvaluatingJavaScriptFromString(regexString)
@@ -208,8 +213,6 @@ class RealmVideoViewController: UIViewController, UIWebViewDelegate {
                 avController.didMoveToParentViewController(self)
                 player.play()
             }
-            //        print("regex string: \(regexString)")
-            //        print("html string: \(html)")
         }
     }
     
