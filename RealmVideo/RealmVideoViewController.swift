@@ -9,6 +9,8 @@
 import UIKit
 import AVFoundation
 import MediaPlayer
+import Ji
+import AVKit
 
 let horizontalMargin: CGFloat = 20.0
 let verticalMargin: CGFloat = 50.0
@@ -44,11 +46,12 @@ class RealmVideoViewController: UIViewController, UIWebViewDelegate {
     var slidesPosition = SlidePosition.BottomRight
     var token: dispatch_once_t = 0
     
-    var videoURL: NSURL?
+    var webURL: NSURL?
+    var videoURL: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let url = videoURL else { return }
+        guard let url = webURL else { return }
         
         let request = NSURLRequest(URL: url)
         webView.delegate = self
@@ -84,17 +87,15 @@ class RealmVideoViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
-    @IBAction func dismissVideoControllerWithGesture(sender: UIPinchGestureRecognizer) {
-        if sender.state == .Ended && sender.scale < 0.8 {
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-    }
-    
     /// Called when the AVPlayer is started in the UIWebView
     func playerDidStart() {
-        let window = UIApplication.sharedApplication().windows.last!
-        window.rootViewController!.view.addSubview(floatingSlides)
-        window.rootViewController?.view.bringSubviewToFront(floatingSlides)
+        // Ensure we have a window, rootViewController, and that we're not adding a duplicate floating slide view
+        guard let window = UIApplication.sharedApplication().windows.last,
+              let rootViewController = window.rootViewController where
+              rootViewController.view.subviews.contains(floatingSlides) == false else { return }
+        
+        rootViewController.view.addSubview(floatingSlides)
+        rootViewController.view.bringSubviewToFront(floatingSlides)
         
     }
     
@@ -188,6 +189,27 @@ class RealmVideoViewController: UIViewController, UIWebViewDelegate {
                 let youtubePosition = positionOfElementWithId("video-player") + 63
                 positionOfVideo = youtubePosition
             }
+        }
+        
+        if self.videoURL == nil {
+            let regexString = "var metaTags=document.body.innerHTML;var match = metaTags.match(/id=\\\"wistia\\_[0-9]{3,9}\\_source\\\" src=\\\"(.*?)\\\"/i);match[1];"
+            
+            self.videoURL = webView.stringByEvaluatingJavaScriptFromString(regexString)
+            if self.videoURL?.isEmpty == true {
+                self.videoURL = nil
+            }
+            if let videoURL = self.videoURL {
+                let player = AVPlayer(URL: NSURL(string: videoURL)!)
+                let avController = AVPlayerViewController()
+                avController.player = player
+                avController.view.frame = self.view.bounds
+                self.addChildViewController(avController)
+                self.view.addSubview(avController.view)
+                avController.didMoveToParentViewController(self)
+                player.play()
+            }
+            //        print("regex string: \(regexString)")
+            //        print("html string: \(html)")
         }
     }
     

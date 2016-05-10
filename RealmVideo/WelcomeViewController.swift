@@ -61,7 +61,7 @@ class WelcomeViewController: UIViewController, UITextFieldDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "RealmVideo", let destination = segue.destinationViewController as? RealmVideoViewController {
-            destination.videoURL = NSURL(string: textField.text!)!
+            destination.webURL = NSURL(string: textField.text!)!
         } else if segue.identifier == "BrowseVideos", let destination = segue.destinationViewController as? BrowseVideosViewController {
             destination.welcome = self
         }

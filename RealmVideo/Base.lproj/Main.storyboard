@@ -30,9 +30,6 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Mk2-c4-gdP" secondAttribute="bottom" id="eNf-C6-y1y"/>
                             <constraint firstItem="Mk2-c4-gdP" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="qo5-3f-xDO"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="9Bg-pj-s1s" appends="YES" id="P7A-Hd-Iye"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="floatingSlides" destination="irH-e9-uTY" id="Ozb-FA-2fM"/>
@@ -69,11 +66,6 @@
                         <constraint firstItem="Jur-nk-V80" firstAttribute="top" secondItem="irH-e9-uTY" secondAttribute="top" id="ygS-k3-xC9"/>
                     </constraints>
                 </view>
-                <pinchGestureRecognizer id="9Bg-pj-s1s">
-                    <connections>
-                        <action selector="dismissVideoControllerWithGesture:" destination="BYZ-38-t0r" id="V0Z-yx-aPr"/>
-                    </connections>
-                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="286" y="434"/>
         </scene>
